@@ -58,12 +58,14 @@ class MuzikantenBankEU():
         self.advertisements = self.soup.find_all('article')
         for ad in self.advertisements:
             self.title = ad.find('h1').text
+            self.category = ad.find('h2').text
             self.date = ad.find('time').text
             self.message = ad.find('p').text
             self.link = ad.find('a', href=True)['href']
             self.link = f'{self.base_url}{self.link}'
             self.info = {
                 'title': self.title,
+                'category': self.category,
                 'message': self.message,
                 'link': self.link,
                 'date': self.date
