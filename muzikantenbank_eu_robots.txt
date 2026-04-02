@@ -1,0 +1,10 @@
+User-agent: *
+Disallow: /index.php
+Disallow: /composer.json
+Disallow: /composer.lock
+Disallow: /app/
+Disallow: /config/
+Disallow: /library/
+
+User-agent: Mediapartners-Google
+Allow: /
