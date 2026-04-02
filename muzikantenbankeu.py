@@ -43,9 +43,10 @@ class MuzikantenBankEU():
         if self.city:
             self.url_parts.append(self.city)
 
-        final_url = f'{self.base_url}/advertenties/' + '/'.join(self.url_parts)
-        print(final_url)
-        # self.search_website(url=self.final_url)
+        self.final_url = f'{self.base_url}/advertenties/' + \
+            '/'.join(self.url_parts)
+
+        self.results = self.search_website(url=self.final_url)
 
     def search_website(self, url) -> list:
         '''Returns a list of dictionaries with info all advertisements'''
