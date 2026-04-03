@@ -18,3 +18,5 @@ with open('muzikantenbank_net_results.txt', 'a') as muzbanktxt:
     for thing in muzikantenbank_net.results:
         dict_to_text = DictToText(thing)
         muzbanktxt.write(f'{dict_to_text.return_advertisement()}\n')
+
+# branch is now merged
