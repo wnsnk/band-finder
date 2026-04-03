@@ -4,7 +4,6 @@ from typing import Literal
 
 
 class MuzikantenBankNet():
-    '''Required params: looking_for.'''
 
     def __init__(self, search_query: str):
         '''search_query can be a normal sentence. Example: gitarist gelderland metal'''
@@ -36,7 +35,6 @@ class MuzikantenBankNet():
             self.date = None
             self.message = ad.find(class_='msg').text
             self.message = self.message.strip()
-            # print(self.message)
             self.link = ad.select_one('div div h3 a')
             self.link = self.link.get('href')
 
