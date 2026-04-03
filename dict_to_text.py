@@ -1,7 +1,3 @@
-# test_dict = {'title': ***REMOVED***
-# ***REMOVED***}
-
-
 class DictToText():
     def __init__(self, dictionary):
         self.title = dictionary['title']
