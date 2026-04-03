@@ -28,30 +28,25 @@ class MuzikantenBankNet():
 
         for ad in self.advertisements:
             self.title = ad.find('div', class_='snippet-title').text
-            print(self.title)
+            self.title = self.title.strip('\n')
             self.category = ad.find(
                 style="color:rgb(34,34,34);font-size:15.5px;margin-top:2px;font-family:'Open Sans','Helvetica Neue','Helvetica',"
                 "'Arial','sans-serif';").text
-            print(self.category)
+            self.category = self.category.strip()
             self.date = None
             self.message = ad.find(class_='msg').text
-            print(self.message)
-            self.link = ad.find(
-                'a', style='font-weigth:bold;',).text
-            print(self.link)
-            # self.link = f'{self.base_url}{self.link}'
-            # self.info = {
-            #     'title': self.title,
-            #     'category': self.category,
-            #     'message': self.message,
-            #     'link': self.link,
-            #     'date': self.date
-            # }
-            # self.all_advertisements.append(self.info)
+            self.message = self.message.strip()
+            # print(self.message)
+            self.link = ad.select_one('div div h3 a')
+            self.link = self.link.get('href')
 
-        # print(self.advertisements)
+            self.info = {
+                'title': self.title,
+                'category': self.category,
+                'message': self.message,
+                'link': self.link,
+                'date': self.date
+            }
+            self.all_advertisements.append(self.info)
 
         return self.all_advertisements
-
-
-test = MuzikantenBankNet('bassist gelderland leuke muziek')
