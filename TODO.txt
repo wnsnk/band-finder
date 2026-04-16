@@ -1,1 +1,2 @@
 save all advertisements in 1 txt (or maybe a html?)
+trying to add it all via flask??
