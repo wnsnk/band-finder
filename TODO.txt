@@ -1,4 +1,1 @@
-add muzikantenbank.net
-add poppunt gelderland
-
 save all advertisements in 1 txt (or maybe a html?)
