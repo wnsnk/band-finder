@@ -1,7 +1,7 @@
 from flask import Flask, render_template
-from muzikantenbankeu import MuzikantenBankEU
-from muzikantenbanknet import MuzikantenBankNet
-from poppuntgelderland import PopPuntGelderlandPrikbord
+from webscrapers.muzikantenbankeu import MuzikantenBankEU
+from webscrapers.muzikantenbanknet import MuzikantenBankNet
+from webscrapers.poppuntgelderland import PopPuntGelderlandPrikbord
 from dict_to_text import DictToText
 import datetime
 muzikantenbank_eu = MuzikantenBankEU('musician', instrument='bassist',
