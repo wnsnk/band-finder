@@ -1,2 +1,4 @@
 save all advertisements in 1 txt (or maybe a html?)
 trying to add it all via flask??
+
+change all dates to datetime object so i can sort on newest
