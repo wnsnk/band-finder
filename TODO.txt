@@ -1,3 +1,4 @@
-change all dates to datetime object so i can sort by newest
+change all dates to datetime object so i can sort by newest only poppunt gelderland left todo
+show results in /results instead of /
 create a way to save "favourites"
-search bar
+make the search bar work
