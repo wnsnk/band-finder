@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+from date_converter import DateConverter
 
 
 class MuzikantenBankNet():
@@ -31,7 +32,10 @@ class MuzikantenBankNet():
                 style="color:rgb(34,34,34);font-size:15.5px;margin-top:2px;font-family:'Open Sans','Helvetica Neue','Helvetica',"
                 "'Arial','sans-serif';").text
             self.category = self.category.strip()
-            self.date = None
+            self.date_converter = DateConverter(self.category)
+            self.date_dict = self.date_converter.convert_str_to_date_muzikantenbank_net()
+            self.date = self.date_converter.convert_to_datetime_object(
+                self.date_dict)
             self.message = ad.find(class_='msg').text
             self.message = self.message.strip()
             self.link = ad.select_one('div div h3 a')

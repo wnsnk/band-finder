@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 from typing import Literal
+from date_converter import DateConverter
 
 instrument_options = ['accordeonist', 'bassist', 'blazer', 'dj', 'drummer', 'geluidstechnicus',
                       'gitarist', 'percussionist', 'strijker', 'toetsenist', 'zanger-zangeres', 'overig']
@@ -60,6 +61,10 @@ class MuzikantenBankEU():
             self.title = ad.find('h1').text
             self.category = ad.find('h2').text
             self.date = ad.find('time').text
+            self.date_converter = DateConverter(date=self.date)
+            self.date_string = self.date_converter.convert_str_to_date_muzbank_eu()
+            self.date = self.date_converter.convert_to_datetime_object(
+                self.date_string)
             self.message = ad.find('p').text
             self.link = ad.find('a', href=True)['href']
             self.link = f'{self.base_url}{self.link}'
