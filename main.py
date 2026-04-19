@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, RadioField, SelectField, SelectMultipleField, BooleanField
+from wtforms import StringField, PasswordField, SubmitField, RadioField, SelectField, SelectMultipleField, BooleanField, SearchField
 from wtforms.validators import DataRequired, Email, Length
 from flask_bootstrap import Bootstrap5
 from webscrapers.muzikantenbankeu import MuzikantenBankEU, instrument_options, province_options_netherlands
@@ -36,12 +36,23 @@ class SearchForm(FlaskForm):
     submit = SubmitField('Zoeken.')
 
 
+# class SearchBar(FlaskForm):
+#     search_bar = SearchField()
+#     submit = SubmitField('Search')
+
+
 @app.route('/', methods=['POST', 'GET'])
 def home_page():
     search_form = SearchForm()
+    # search_bar = SearchBar()
+
+    # if search_bar.validate_on_submit():
+    #     print(search_bar.search_bar.data)
 
     if search_form.validate_on_submit():
         looking_for = search_form.looking_for.data
+        if looking_for == 'muzikant':
+            looking_for = 'musician'
         instrument = search_form.instrument.data
         # country = search_form.country
         province = search_form.province.data
@@ -64,15 +75,15 @@ def home_page():
             for result in poppunt_gelderland.results:
                 all_results.append(result)
 
-        return render_template('results.html', articles=all_results)
+        return show_results(articles=all_results, )
     else:
 
         return render_template('index.html', search_form=search_form)
 
 
 @app.route('/results')
-def show_results():
-    return render_template('results.html')
+def show_results(articles):
+    return render_template('results.html', articles=articles)
 
 
 if __name__ == '__main__':
