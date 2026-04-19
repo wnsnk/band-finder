@@ -1,2 +1,3 @@
 change all dates to datetime object so i can sort by newest
 create a way to save "favourites"
+search bar
