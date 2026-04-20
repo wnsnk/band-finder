@@ -21,41 +21,36 @@ Bootstrap = Bootstrap5(app=app)
 
 class SearchForm(FlaskForm):
 
-    looking_for = RadioField(label='Ik zoek een:', choices=[
+    looking_for = RadioField(label='Ik zoek een: *', choices=[
                              'band', 'muzikant'])
     instrument = SelectField(
-        label='Wat voor muzikant? ', choices=instrument_options)
+        label='Wat voor muzikant? ', choices=['*'] + instrument_options)
     # country = RadioField(label='Land', choices=['Nederland', 'België'])
     province = SelectField(
-        label='Provincie', choices=province_options_netherlands)
+        label='Provincie', choices=['*'] + province_options_netherlands)
     muzbankeu = BooleanField(
-        label='muzikantenbank.eu', )
+        label='muzikantenbank.eu', default=True)
     muzbanknet = BooleanField(
-        label='muzikantenbank.net', )
-    poppunt = BooleanField(label='Poppunt Gelderland')
+        label='muzikantenbank.net', default=True)
+    poppunt = BooleanField(label='Poppunt Gelderland', default=True)
     submit = SubmitField('Zoeken.')
-
-
-# class SearchBar(FlaskForm):
-#     search_bar = SearchField()
-#     submit = SubmitField('Search')
 
 
 @app.route('/', methods=['POST', 'GET'])
 def home_page():
     search_form = SearchForm()
-    # search_bar = SearchBar()
-
-    # if search_bar.validate_on_submit():
-    #     print(search_bar.search_bar.data)
 
     if search_form.validate_on_submit():
         looking_for = search_form.looking_for.data
         if looking_for == 'muzikant':
             looking_for = 'musician'
         instrument = search_form.instrument.data
+        if instrument == '*':
+            instrument = None
         # country = search_form.country
         province = search_form.province.data
+        if province == '*':
+            province = None
 
 # TODO catch valueerror and unbounderror and other bugs
         all_results = []
@@ -65,8 +60,18 @@ def home_page():
             for result in muzikantenbank_eu.results:
                 all_results.append(result)
         if search_form.muzbanknet.data:
-            muzikantenbank_net = MuzikantenBankNet(
-                f'{instrument} {province}')
+            if province == None and instrument == None:
+                # TODO: MAKE THIS WORK
+                pass
+            elif province == None:
+                muzikantenbank_net = MuzikantenBankNet(
+                    f'{instrument}')
+            elif instrument == None:
+                muzikantenbank_net = MuzikantenBankNet(
+                    f'{province}')
+            else:
+                muzikantenbank_net = MuzikantenBankNet(
+                    f'{instrument} {province}')
             for result in muzikantenbank_net.results:
                 all_results.append(result)
 
@@ -90,22 +95,3 @@ def show_results(articles):
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-
-# with open('muzikantenbank_eu_results.txt', 'a') as muzbanktxt:
-#     muzbanktxt.write(f'Muzikantenbank.eu results of {today}\n')
-#     for result in muzikantenbank_eu.results:
-#         dict_to_text = DictToText(result)
-#         muzbanktxt.write(f'{dict_to_text.return_advertisement()}\n')
-
-# with open('muzikantenbank_net_results.txt', 'a') as muzbanktxt:
-#     muzbanktxt.write(f'Muzikantenbank.net results of {today}\n')
-#     for result in muzikantenbank_net.results:
-#         dict_to_text = DictToText(result)
-#         muzbanktxt.write(f'{dict_to_text.return_advertisement()}\n')
-
-# with open('poppuntgelderland_resulst.txt', 'a') as poppunttxt:
-#     poppunttxt.write(f'Poppuntgelderland results of {today}\n')
-#     for result in poppunt_gelderland.results:
-#         dict_to_text = DictToText(result)
-#         poppunttxt.write(f'{dict_to_text.return_advertisement()}\n')
