@@ -26,6 +26,6 @@ flask will start a local server where the app is hosted.
 
 ## Tech Stack
 - Python 3.14
--Flask
--Bootstrap
--Beautiful Soup
+- Flask
+- Bootstrap
+- Beautiful Soup
