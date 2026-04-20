@@ -14,7 +14,7 @@ Results are automatically sorted by newest.
 - create a .env file in the same folder as the repository
 - add your own environment variables to the .env file (see .env.example)
 
-## 🛠 Usage
+## Usage
 - run the app:
 
 ```bash
