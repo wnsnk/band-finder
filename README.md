@@ -11,11 +11,6 @@ Results are automatically sorted by newest.
 
 ## Installation
 - clone the repository and install dependencies:
-```bash
-git https://github.com/wnsnk/band-finder.git
-cd band-finder
-pip install -r requirements.txt
-```
 - create a .env file in the same folder as the repository
 - add your own environment variables to the .env file (see .env.example)
 
