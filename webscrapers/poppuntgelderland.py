@@ -1,6 +1,13 @@
 import requests
 from bs4 import BeautifulSoup
 from .date_converter import DateConverter
+from dotenv import load_dotenv
+import os
+
+
+load_dotenv()
+
+user_agent = os.getenv('USER_AGENT')
 
 
 class PopPuntGelderlandPrikbord():
@@ -8,7 +15,7 @@ class PopPuntGelderlandPrikbord():
     def __init__(self):
         self.url = 'https://poppuntgelderland.nl/prikbord/'
         self.headers = {
-            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:149.0) Gecko/20100101 Firefox/149.0'}
+            'User-Agent': user_agent}
         self.results = self.search_website()
 
     def search_website(self) -> list:
