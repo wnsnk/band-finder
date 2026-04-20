@@ -58,3 +58,6 @@ class DateConverter():
         return {'day': self.day,
                 'month': self.month,
                 'year': self.year}
+
+    def convert_strftime(self):
+        return self.date.strftime('%d-%m-%Y')

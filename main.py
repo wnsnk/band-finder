@@ -1,11 +1,14 @@
 from flask import Flask, render_template, request, redirect
 from flask_wtf import FlaskForm
+
 from wtforms import StringField, PasswordField, SubmitField, RadioField, SelectField, SelectMultipleField, BooleanField, SearchField
 from wtforms.validators import DataRequired, Email, Length
 from flask_bootstrap import Bootstrap5
+
 from webscrapers.muzikantenbankeu import MuzikantenBankEU, instrument_options, province_options_netherlands
 from webscrapers.muzikantenbanknet import MuzikantenBankNet
 from webscrapers.poppuntgelderland import PopPuntGelderlandPrikbord
+from webscrapers.date_converter import DateConverter
 from dict_to_text import DictToText
 import datetime
 
@@ -62,7 +65,8 @@ def home_page():
         if search_form.muzbanknet.data:
             if province == None and instrument == None:
                 # TODO: MAKE THIS WORK
-                pass
+                muzikantenbank_net = None
+                print('none and none')
             elif province == None:
                 muzikantenbank_net = MuzikantenBankNet(
                     f'{instrument}')
@@ -72,8 +76,11 @@ def home_page():
             else:
                 muzikantenbank_net = MuzikantenBankNet(
                     f'{instrument} {province}')
-            for result in muzikantenbank_net.results:
-                all_results.append(result)
+
+            if muzikantenbank_net:
+                print('if')
+                for result in muzikantenbank_net.results:
+                    all_results.append(result)
 
         if search_form.poppunt.data:
             poppunt_gelderland = PopPuntGelderlandPrikbord()
@@ -81,7 +88,9 @@ def home_page():
                 all_results.append(result)
 
         all_results.sort(key=lambda x: x['date'], reverse=True)
-
+        for result in all_results:
+            date_converter = DateConverter(result['date'])
+            result['date'] = date_converter.convert_strftime()
         return show_results(articles=all_results, )
     else:
 
