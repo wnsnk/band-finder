@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+from date_converter import DateConverter
 
 
 class PopPuntGelderlandPrikbord():
@@ -22,7 +23,11 @@ class PopPuntGelderlandPrikbord():
         for ad in self.advertisements:
             self.title = ad.find('h3', class_='big').text
             self.category = ad.find('h4', class_='bold').text
-            self.date = ad.find_all('h4')[1].text
+            self.date_string = ad.find_all('h4')[1].text
+            self.date_converter = DateConverter(self.date_string)
+            self.date_dict = self.date_converter.convert_str_to_date_poppunt_gld()
+            self.date = self.date_converter.convert_to_datetime_object(
+                self.date_dict)
             self.message = ''
             self.link = ad.find('a', href=True)['href']
 
