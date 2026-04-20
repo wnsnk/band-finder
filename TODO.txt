@@ -1,3 +1,0 @@
-show results in /results instead of /
-create a way to save "favourites"
-make the search bar work
