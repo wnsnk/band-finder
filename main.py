@@ -75,6 +75,8 @@ def home_page():
             for result in poppunt_gelderland.results:
                 all_results.append(result)
 
+        all_results.sort(key=lambda x: x['date'], reverse=True)
+
         return show_results(articles=all_results, )
     else:
 
