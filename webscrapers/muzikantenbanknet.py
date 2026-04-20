@@ -46,7 +46,8 @@ class MuzikantenBankNet():
                 'category': self.category,
                 'message': self.message,
                 'link': self.link,
-                'date': self.date
+                'date': self.date,
+                'website': 'muzikantenbank.net'
             }
             self.all_advertisements.append(self.info)
 

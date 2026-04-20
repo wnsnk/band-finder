@@ -36,7 +36,8 @@ class PopPuntGelderlandPrikbord():
                 'category': self.category,
                 'message': self.message,
                 'link': self.link,
-                'date': self.date
+                'date': self.date,
+                'website': 'poppuntgelderland.nl'
             }
             self.all_advertisements.append(self.info)
         return self.all_advertisements

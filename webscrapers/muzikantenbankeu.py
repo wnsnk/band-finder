@@ -73,7 +73,8 @@ class MuzikantenBankEU():
                 'category': self.category,
                 'message': self.message,
                 'link': self.link,
-                'date': self.date
+                'date': self.date,
+                'website': 'muzikantenbank.eu'
             }
             self.all_advertisements.append(self.info)
 
