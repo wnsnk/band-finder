@@ -2,3 +2,4 @@ muzikantenbank_eu_results.txt
 muzikantenbank_net_results.txt
 poppuntgelderland_results.txt
 **/__pycache__/
+.env
