@@ -54,7 +54,6 @@ class DateConverter():
     def convert_str_to_date_poppunt_gld(self):
         '''Get's the date from the category part of Poppunt Gelderland ads and turns it into a dictionary'''
         date_splitted = self.date.split()
-        print(date_splitted)
         self.day = date_splitted[0]
         self.month_name = date_splitted[1].lower()
         self.month = self.dutch_months[self.month_name]
