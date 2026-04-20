@@ -1,8 +1,5 @@
 import datetime
 
-muzikantenbankeu_date = 'zaterdag 14 februari 2026'
-muzikantenbank_net_date = '***REMOVED***'
-
 
 class DateConverter():
     def __init__(self, date):
