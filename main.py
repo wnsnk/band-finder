@@ -9,11 +9,6 @@ from webscrapers.muzikantenbankeu import MuzikantenBankEU, instrument_options, p
 from webscrapers.muzikantenbanknet import MuzikantenBankNet
 from webscrapers.poppuntgelderland import PopPuntGelderlandPrikbord
 from webscrapers.date_converter import DateConverter
-from dict_to_text import DictToText
-import datetime
-
-
-today = datetime.datetime.now()
 
 
 # flask:
