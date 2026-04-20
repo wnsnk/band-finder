@@ -25,7 +25,7 @@ Bootstrap = Bootstrap5(app=app)
 class SearchForm(FlaskForm):
 
     looking_for = RadioField(label='Ik zoek een: *', choices=[
-                             'band', 'muzikant'])
+                             'band', 'muzikant'], default='band')
     instrument = SelectField(
         label='Wat voor muzikant? ', choices=['*'] + instrument_options)
     # country = RadioField(label='Land', choices=['Nederland', 'België'])
