@@ -62,12 +62,3 @@ class DateConverter():
         return {'day': self.day,
                 'month': self.month,
                 'year': self.year}
-
-
-# muzikantenbankeu = DateConverter(muzikantenbankeu_date)
-# aaaaaaaa = muzikantenbankeu.convert_str_to_date_muzbank_eu()
-# print(muzikantenbankeu.convert_to_datetime_object(aaaaaaaa))
-
-# muzikantenbanknet = DateConverter(date=muzikantenbank_net_date)
-# aaa = muzikantenbanknet.convert_str_to_date_muzikantenbank_net()
-# print(muzikantenbanknet.convert_to_datetime_object(aaa))
