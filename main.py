@@ -10,10 +10,14 @@ from webscrapers.muzikantenbanknet import MuzikantenBankNet
 from webscrapers.poppuntgelderland import PopPuntGelderlandPrikbord
 from webscrapers.date_converter import DateConverter
 
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 # flask:
 app = Flask(__name__)
-app.secret_key = 'idk'
+app.secret_key = os.getenv('APP_SECRET_KEY')
 Bootstrap = Bootstrap5(app=app)
 
 
