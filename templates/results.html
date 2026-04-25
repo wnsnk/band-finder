@@ -38,7 +38,7 @@
                             href="http://{{article['website']}}">{{article['website']}}</a></i></p>
                 <p class="card-text">{{article['message']}}</p>
                 <a href="{{article['link']}}" class="btn btn-light">Bekijk volledige advertentie</a>
-                <a href="{{ url_for('add_to_favourites', id=article.id) }}" class="btn btn-light">Voeg toe aan
+                <a href="{{ url_for('add_to_favourites', id=article.id) }}" class="btn btn-warning">Voeg toe aan
                     favorieten</a>
             </div>
         </div>
