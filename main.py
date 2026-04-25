@@ -5,6 +5,10 @@ from wtforms import StringField, PasswordField, SubmitField, RadioField, SelectF
 from wtforms.validators import DataRequired, Email, Length
 from flask_bootstrap import Bootstrap5
 
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
+from sqlalchemy import Integer, String, Float, desc
+
 from webscrapers.muzikantenbankeu import MuzikantenBankEU, instrument_options, province_options_netherlands
 from webscrapers.muzikantenbanknet import MuzikantenBankNet
 from webscrapers.poppuntgelderland import PopPuntGelderlandPrikbord
@@ -13,12 +17,37 @@ from webscrapers.date_converter import DateConverter
 from dotenv import load_dotenv
 import os
 
+import time
+
 load_dotenv()
 
 # flask:
 app = Flask(__name__)
 app.secret_key = os.getenv('APP_SECRET_KEY')
 Bootstrap = Bootstrap5(app=app)
+
+
+class Base(DeclarativeBase):
+    pass
+
+
+db = SQLAlchemy(model_class=Base)
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"
+db.init_app(app)
+
+
+class TemporaryAdvertisements(db.Model):
+    id: Mapped[int] = mapped_column(primary_key=True)
+    title: Mapped[str]
+    category: Mapped[str]
+    message: Mapped[str]
+    link: Mapped[str]
+    date: Mapped[str]
+    website: Mapped[str]
+
+
+with app.app_context():
+    db.create_all()
 
 
 class SearchForm(FlaskForm):
@@ -55,12 +84,19 @@ def home_page():
             province = None
 
 # TODO catch valueerror and unbounderror and other bugs
-        all_results = []
         if search_form.muzbankeu.data:
             muzikantenbank_eu = MuzikantenBankEU(looking_for=looking_for, instrument=instrument,
                                                  province=province)
             for result in muzikantenbank_eu.results:
-                all_results.append(result)
+                send_ad_to_database = TemporaryAdvertisements(title=result['title'],
+                                                              category=result['category'],
+                                                              message=result['message'],
+                                                              link=result['link'],
+                                                              date=result['date'],
+                                                              website=result['website'],)
+                db.session.add(send_ad_to_database)
+                db.session.commit()
+
         if search_form.muzbanknet.data:
             if province == None and instrument == None:
                 # TODO: MAKE THIS WORK
@@ -79,19 +115,37 @@ def home_page():
             if muzikantenbank_net:
                 print('if')
                 for result in muzikantenbank_net.results:
-                    all_results.append(result)
+                    send_ad_to_database = TemporaryAdvertisements(title=result['title'],
+                                                                  category=result['category'],
+                                                                  message=result['message'],
+                                                                  link=result['link'],
+                                                                  date=result['date'],
+                                                                  website=result['website'],)
+                    db.session.add(send_ad_to_database)
+                    db.session.commit()
 
         if search_form.poppunt.data:
             poppunt_gelderland = PopPuntGelderlandPrikbord()
             for result in poppunt_gelderland.results:
-                all_results.append(result)
+                send_ad_to_database = TemporaryAdvertisements(title=result['title'],
+                                                              category=result['category'],
+                                                              message=result['message'],
+                                                              link=result['link'],
+                                                              date=result['date'],
+                                                              website=result['website'],)
+                db.session.add(send_ad_to_database)
+                db.session.commit()
 
-        all_results.sort(key=lambda x: x['date'], reverse=True)
-        for result in all_results:
-            date_converter = DateConverter(result['date'])
-            result['date'] = date_converter.convert_strftime()
+        all_results = db.session.execute(db.select(TemporaryAdvertisements).order_by(desc(
+            TemporaryAdvertisements.date))).scalars()
+        # all_results.sort(key=lambda x: x['date'], reverse=True)
+        # for result in all_results:
+        #     date_converter = DateConverter(result['date'])
+        #     result['date'] = date_converter.convert_strftime()
         return show_results(articles=all_results, )
     else:
+        db.session.query(TemporaryAdvertisements).delete()
+        db.session.commit()
 
         return render_template('index.html', search_form=search_form)
 
