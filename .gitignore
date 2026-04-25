@@ -4,3 +4,4 @@ poppuntgelderland_results.txt
 **/__pycache__/
 .env
 TODO.txt
+instance/database.db
