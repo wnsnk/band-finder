@@ -17,8 +17,6 @@ from webscrapers.date_converter import DateConverter
 from dotenv import load_dotenv
 import os
 
-import time
-
 load_dotenv()
 
 # flask:
@@ -138,10 +136,6 @@ def home_page():
 
         all_results = db.session.execute(db.select(TemporaryAdvertisements).order_by(desc(
             TemporaryAdvertisements.date))).scalars()
-        # all_results.sort(key=lambda x: x['date'], reverse=True)
-        # for result in all_results:
-        #     date_converter = DateConverter(result['date'])
-        #     result['date'] = date_converter.convert_strftime()
         return show_results(articles=all_results, )
     else:
         db.session.query(TemporaryAdvertisements).delete()
