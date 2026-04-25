@@ -54,6 +54,16 @@ class FavouriteAdvertisements(db.Model):
     website: Mapped[str]
 
 
+class SearchAdvertisements(db.Model):
+    id: Mapped[int] = mapped_column(primary_key=True)
+    title: Mapped[str]
+    category: Mapped[str]
+    message: Mapped[str]
+    link: Mapped[str]
+    date: Mapped[str]
+    website: Mapped[str]
+
+
 with app.app_context():
     db.create_all()
 
@@ -73,6 +83,11 @@ class SearchForm(FlaskForm):
         label='muzikantenbank.net', default=True)
     poppunt = BooleanField(label='Poppunt Gelderland', default=True)
     submit = SubmitField('Zoeken.')
+
+
+class SearchBar(FlaskForm):
+    search_field = SearchField('')
+    submit = SubmitField('Zoeken')
 
 
 @app.route('/', methods=['POST', 'GET'])
@@ -152,11 +167,28 @@ def home_page():
         return render_template('index.html', search_form=search_form)
 
 
-@app.route('/results')
+@app.route('/results', methods=['GET', 'POST'])
 def show_results():
+    search_bar = SearchBar()
     all_results = db.session.execute(db.select(TemporaryAdvertisements).order_by(desc(
-        TemporaryAdvertisements.date))).scalars()
-    return render_template('results.html', articles=all_results)
+        TemporaryAdvertisements.date))).scalars().all()
+    if search_bar.validate_on_submit():
+        db.session.query(SearchAdvertisements).delete()
+        db.session.commit()
+        query = search_bar.search_field.data.lower()
+        for result in all_results:
+            if query in result.title.lower() or query in result.message.lower():
+                add_advertisement = SearchAdvertisements(id=result.id,
+                                                         title=result.title,
+                                                         category=result.category,
+                                                         message=result.message,
+                                                         link=result.link,
+                                                         date=result.date,
+                                                         website=result.website)
+                db.session.add(add_advertisement)
+                db.session.commit()
+        return redirect(url_for('get_search_results', query=query))
+    return render_template('results.html', articles=all_results, search_bar=search_bar)
 
 
 @app.route('/add/<id>')
@@ -186,6 +218,14 @@ def show_favourites():
     all_favourites = db.session.execute(db.select(FavouriteAdvertisements).order_by(desc(
         FavouriteAdvertisements.date))).scalars()
     return render_template('favourites.html', articles=all_favourites)
+
+
+@app.route('/search/<query>')
+def get_search_results(query):
+
+    search_results = db.session.execute(db.select(SearchAdvertisements).order_by(desc(
+        SearchAdvertisements.date))).scalars()
+    return render_template('search.html', articles=search_results, query=query)
 
 
 if __name__ == '__main__':
