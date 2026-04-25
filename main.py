@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, url_for
 from flask_wtf import FlaskForm
 
 from wtforms import StringField, PasswordField, SubmitField, RadioField, SelectField, SelectMultipleField, BooleanField, SearchField
@@ -35,6 +35,16 @@ db.init_app(app)
 
 
 class TemporaryAdvertisements(db.Model):
+    id: Mapped[int] = mapped_column(primary_key=True)
+    title: Mapped[str]
+    category: Mapped[str]
+    message: Mapped[str]
+    link: Mapped[str]
+    date: Mapped[str]
+    website: Mapped[str]
+
+
+class FavouriteAdvertisements(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
     title: Mapped[str]
     category: Mapped[str]
@@ -134,9 +144,7 @@ def home_page():
                 db.session.add(send_ad_to_database)
                 db.session.commit()
 
-        all_results = db.session.execute(db.select(TemporaryAdvertisements).order_by(desc(
-            TemporaryAdvertisements.date))).scalars()
-        return show_results(articles=all_results, )
+        return redirect(url_for('show_results'))
     else:
         db.session.query(TemporaryAdvertisements).delete()
         db.session.commit()
@@ -145,8 +153,39 @@ def home_page():
 
 
 @app.route('/results')
-def show_results(articles):
-    return render_template('results.html', articles=articles)
+def show_results():
+    all_results = db.session.execute(db.select(TemporaryAdvertisements).order_by(desc(
+        TemporaryAdvertisements.date))).scalars()
+    return render_template('results.html', articles=all_results)
+
+
+@app.route('/add/<id>')
+def add_to_favourites(id):
+    article = db.get_or_404(TemporaryAdvertisements, id)
+    new_favourite = FavouriteAdvertisements(id=article.id,
+                                            title=article.title,
+                                            category=article.category,
+                                            message=article.message,
+                                            link=article.link,
+                                            date=article.date,
+                                            website=article.website)
+    db.session.add(new_favourite)
+    db.session.commit()
+    return redirect(url_for('show_results'))
+
+
+@app.route('/delete/<id>')
+def remove_from_favourites(id):
+    FavouriteAdvertisements.query.filter_by(id=id).delete()
+    db.session.commit()
+    return redirect(url_for('show_favourites'))
+
+
+@app.route('/favourites')
+def show_favourites():
+    all_favourites = db.session.execute(db.select(FavouriteAdvertisements).order_by(desc(
+        FavouriteAdvertisements.date))).scalars()
+    return render_template('favourites.html', articles=all_favourites)
 
 
 if __name__ == '__main__':
