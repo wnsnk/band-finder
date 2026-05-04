@@ -5,7 +5,7 @@ from .date_converter import DateConverter
 
 class MuzikantenBankNet():
 
-    def __init__(self, search_query: str):
+    def __init__(self, search_query: str, get_all_ads=False):
         '''search_query can be a normal sentence. Example: gitarist gelderland metal'''
         self.base_url = 'https://www.muzikantenbank.net'
 
@@ -13,7 +13,9 @@ class MuzikantenBankNet():
         self.replace_spaces = self.search_query.replace(' ', '-')
 
         self.final_url = f'{self.base_url}/advertenties/text-zoeken/{self.replace_spaces}'
-
+        self.get_all_ads = get_all_ads
+        if self.get_all_ads:
+            self.final_url = f'{self.base_url}/advertenties/muzikanten'
         self.results = self.search_website(url=self.final_url)
 
     def search_website(self, url) -> list:
@@ -24,6 +26,8 @@ class MuzikantenBankNet():
         self.soup = BeautifulSoup(self.html, 'html.parser')
         self.all_advertisements = []
         self.advertisements = self.soup.find_all('div', class_='snippet')
+        if self.get_all_ads:
+            self.advertisements = self.advertisements[1:]
 
         for ad in self.advertisements:
             self.title = ad.find('div', class_='snippet-title').text
