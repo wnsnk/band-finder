@@ -122,9 +122,7 @@ def home_page():
 
         if search_form.muzbanknet.data:
             if province == None and instrument == None:
-                # TODO: MAKE THIS WORK
-                muzikantenbank_net = None
-                print('none and none')
+                muzikantenbank_net = MuzikantenBankNet('', get_all_ads=True)
             elif province == None:
                 muzikantenbank_net = MuzikantenBankNet(
                     f'{instrument}')
