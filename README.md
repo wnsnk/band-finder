@@ -10,8 +10,18 @@ The app can scrape the data of 3 different dutch musician classifieds.
 Results are automatically sorted by newest.
 
 ## Installation
-- clone the repository and install dependencies
-- create a .env file in the same folder as the repository
+- clone the repository, create a virtual environment and install dependencies:
+'''bash
+git clone https://github.com/wnsnk/band-finder.git
+
+cd path/to/band-finder
+
+python3 -m venv .venv
+source .venv/bin/activate
+
+pip install -r requirements.txt
+'''
+
 - add your own environment variables to the .env file (see .env.example)
 
 ## Usage
