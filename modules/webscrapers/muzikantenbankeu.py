@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 from typing import Literal
-from .date_converter import DateConverter
+from ..date_converter import DateConverter
 
 instrument_options = ['accordeonist', 'bassist', 'blazer', 'dj', 'drummer', 'geluidstechnicus',
                       'gitarist', 'percussionist', 'strijker', 'toetsenist', 'zanger-zangeres', 'overig']

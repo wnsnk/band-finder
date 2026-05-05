@@ -9,11 +9,12 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from sqlalchemy import Integer, String, Float, desc
 
-from webscrapers.muzikantenbankeu import MuzikantenBankEU, instrument_options, province_options_netherlands
-from webscrapers.muzikantenbanknet import MuzikantenBankNet
-from webscrapers.poppuntgelderland import PopPuntGelderlandPrikbord
-from webscrapers.date_converter import DateConverter
+from modules.webscrapers.muzikantenbankeu import MuzikantenBankEU, instrument_options, province_options_netherlands
+from modules.webscrapers.muzikantenbanknet import MuzikantenBankNet
+from modules.webscrapers.poppuntgelderland import PopPuntGelderlandPrikbord
+from modules.date_converter import DateConverter
 
+from modules.forms import SearchBar, SearchForm
 from dotenv import load_dotenv
 import os
 
@@ -66,28 +67,6 @@ class SearchAdvertisements(db.Model):
 
 with app.app_context():
     db.create_all()
-
-
-class SearchForm(FlaskForm):
-
-    looking_for = RadioField(label='Ik zoek een: *', choices=[
-                             'band', 'muzikant'], default='band')
-    instrument = SelectField(
-        label='Wat voor muzikant? ', choices=['*'] + instrument_options)
-    # country = RadioField(label='Land', choices=['Nederland', 'België'])
-    province = SelectField(
-        label='Provincie', choices=['*'] + province_options_netherlands)
-    muzbankeu = BooleanField(
-        label='muzikantenbank.eu', default=True)
-    muzbanknet = BooleanField(
-        label='muzikantenbank.net', default=True)
-    poppunt = BooleanField(label='Poppunt Gelderland', default=True)
-    submit = SubmitField('Zoeken.')
-
-
-class SearchBar(FlaskForm):
-    search_field = SearchField('')
-    submit = SubmitField('Zoeken')
 
 
 @app.route('/', methods=['POST', 'GET'])
