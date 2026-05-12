@@ -21,6 +21,9 @@
     <div class="container" style="width: 90%;">
         <div style="width: 90%;">{{ render_form(search_bar, form_type='inline', button_style='btn btn-outline-success')
             }}
+            <form method="post">
+                {{ form.csrf_token }}
+            </form>
         </div>
         <br>
     </div>

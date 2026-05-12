@@ -26,6 +26,9 @@
                 <p>Velden met een * zijn verplicht.</p>
                 {% from 'bootstrap5/form.html' import render_form %}
                 {{ render_form(search_form) }}
+                <form method="post">
+                    {{ form.csrf_token }}
+                </form>
 
             </div>
         </div>

@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask_wtf import FlaskForm
-
+from flask_wtf.csrf import CSRFProtect
 from wtforms import StringField, PasswordField, SubmitField, RadioField, SelectField, SelectMultipleField, BooleanField, SearchField
 from wtforms.validators import DataRequired, Email, Length
 from flask_bootstrap import Bootstrap5
@@ -17,6 +17,7 @@ from modules.date_converter import DateConverter
 from modules.forms import SearchBar, SearchForm
 from dotenv import load_dotenv
 import os
+import sys
 
 load_dotenv()
 
@@ -24,6 +25,8 @@ load_dotenv()
 app = Flask(__name__)
 app.secret_key = os.getenv('APP_SECRET_KEY')
 Bootstrap = Bootstrap5(app=app)
+csrf = CSRFProtect(app)
+csrf.init_app(app)
 
 
 class Base(DeclarativeBase):
