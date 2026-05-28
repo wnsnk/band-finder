@@ -9,6 +9,9 @@ The app can scrape the data of 3 different dutch musician classifieds.
 
 Results are automatically sorted by newest.
 
+## Screenshots
+![band-finder-homepage](/screenshots/band-finder%20homepage.png "Band-Finder Homepage")
+![band-finder-results](/screenshots/band-finder%20results.png "Band-Finder Results")
 ## Installation
 - clone the repository, create a virtual environment and install dependencies:
 ```bash
