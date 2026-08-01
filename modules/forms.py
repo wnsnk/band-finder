@@ -8,7 +8,7 @@ class SearchForm(FlaskForm):
     looking_for = RadioField(label='Ik zoek een: *', choices=[
                              'band', 'muzikant'], default='band')
     instrument = SelectField(
-        label='Wat voor muzikant? ', choices=['*'] + instrument_options)
+        label='Ik ben een: ', choices=['*'] + instrument_options)
     # country = RadioField(label='Land', choices=['Nederland', 'België'])
     province = SelectField(
         label='Provincie', choices=['*'] + province_options_netherlands)
