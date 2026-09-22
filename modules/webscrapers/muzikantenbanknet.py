@@ -1,9 +1,9 @@
 import requests
 from bs4 import BeautifulSoup
-from date_converter import DateConverter
+from ..date_converter import DateConverter
 # REMINDER CHANGE BACK TO ..date_converter and remove date converter in webscrapers
-from clean_text import clean_text
-
+from ..clean_text import clean_text
+from ..advertisement import Advertisement
 
 class MuzikantenBankNet():
 
@@ -43,19 +43,13 @@ class MuzikantenBankNet():
             self.message = clean_text(ad.find('p').text)
             self.url = ad.find('a', class_='mb-browse-row-card__stretch').attrs['href']
 
-            self.info = {
-                'title': self.title,
-                'category': self.category,
-                'message': self.message,
-                'link': self.url,
-                'date': self.date,
-                'website': 'muzikantenbank.net'
-            }
+            self.info = Advertisement(self.title, self.category, self.message, self.link, self.date, 'muzikantenbank.eu')
+
 
             self.all_advertisements.append(self.info)
 
         return self.all_advertisements
 
 
-muzbank = MuzikantenBankNet('', True)
-# print(muzbank.advertisements)
+# muzbank = MuzikantenBankNet('', True)
+# # print(muzbank.advertisements)

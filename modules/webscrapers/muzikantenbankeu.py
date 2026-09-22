@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 from typing import Literal
 from ..date_converter import DateConverter
+from ..advertisement import Advertisement
 
 instrument_options = ['accordeonist', 'bassist', 'blazer', 'dj', 'drummer', 'geluidstechnicus',
                       'gitarist', 'percussionist', 'strijker', 'toetsenist', 'zanger-zangeres', 'overig']
@@ -68,14 +69,8 @@ class MuzikantenBankEU():
             self.message = ad.find('p').text
             self.link = ad.find('a', href=True)['href']
             self.link = f'{self.base_url}{self.link}'
-            self.info = {
-                'title': self.title,
-                'category': self.category,
-                'message': self.message,
-                'link': self.link,
-                'date': self.date,
-                'website': 'muzikantenbank.eu'
-            }
+
+            self.info = Advertisement(self.title, self.category, self.message, self.link, self.date, 'muzikantenbank.eu')
             self.all_advertisements.append(self.info)
 
         return self.all_advertisements

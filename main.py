@@ -90,12 +90,12 @@ def home_page():
             muzikantenbank_eu = MuzikantenBankEU(looking_for=looking_for, instrument=instrument,
                                                  province=province)
             for result in muzikantenbank_eu.results:
-                send_ad_to_database = TemporaryAdvertisements(title=result['title'],
-                                                              category=result['category'],
-                                                              message=result['message'],
-                                                              link=result['link'],
-                                                              date=result['date'],
-                                                              website=result['website'],)
+                send_ad_to_database = TemporaryAdvertisements(title=result.title,
+                                                              category=result.category,
+                                                              message=result.message,
+                                                              link=result.url,
+                                                              date=result.date,
+                                                              website=result.website)
                 db.session.add(send_ad_to_database)
                 db.session.commit()
 
@@ -115,24 +115,24 @@ def home_page():
             if muzikantenbank_net:
                 print('if')
                 for result in muzikantenbank_net.results:
-                    send_ad_to_database = TemporaryAdvertisements(title=result['title'],
-                                                                  category=result['category'],
-                                                                  message=result['message'],
-                                                                  link=result['link'],
-                                                                  date=result['date'],
-                                                                  website=result['website'],)
+                    send_ad_to_database = TemporaryAdvertisements(title=result.title,
+                                                              category=result.category,
+                                                              message=result.message,
+                                                              link=result.url,
+                                                              date=result.date,
+                                                              website=result.website)
                     db.session.add(send_ad_to_database)
                     db.session.commit()
 
         if search_form.poppunt.data:
             poppunt_gelderland = PopPuntGelderlandPrikbord()
             for result in poppunt_gelderland.results:
-                send_ad_to_database = TemporaryAdvertisements(title=result['title'],
-                                                              category=result['category'],
-                                                              message=result['message'],
-                                                              link=result['link'],
-                                                              date=result['date'],
-                                                              website=result['website'],)
+                send_ad_to_database = TemporaryAdvertisements(title=result.title,
+                                                              category=result.category,
+                                                              message=result.message,
+                                                              link=result.url,
+                                                              date=result.date,
+                                                              website=result.website)
                 db.session.add(send_ad_to_database)
                 db.session.commit()
 
