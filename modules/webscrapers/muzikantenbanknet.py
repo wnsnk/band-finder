@@ -1,7 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
 from ..date_converter import DateConverter
-# REMINDER CHANGE BACK TO ..date_converter and remove date converter in webscrapers
 from ..clean_text import clean_text
 from ..advertisement import Advertisement
 
@@ -9,6 +8,7 @@ class MuzikantenBankNet():
 
     def __init__(self, search_query: str, get_all_ads=False):
         '''search_query can be a normal sentence. Example: gitarist gelderland metal'''
+        # TODO: FIND ALTERNATIVE TO text-zoeken
         self.base_url = 'https://www.muzikantenbank.net'
 
         self.search_query = search_query
@@ -40,6 +40,7 @@ class MuzikantenBankNet():
             #     self.date_dict)
             
             self.date = full_category.find('span').text
+            # TODO DATE CONVERTER
             self.message = clean_text(ad.find('p').text)
             self.url = ad.find('a', class_='mb-browse-row-card__stretch').attrs['href']
 
@@ -50,6 +51,3 @@ class MuzikantenBankNet():
 
         return self.all_advertisements
 
-
-# muzbank = MuzikantenBankNet('', True)
-# # print(muzbank.advertisements)
