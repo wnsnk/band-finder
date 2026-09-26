@@ -31,22 +31,13 @@ class DateConverter():
 
     def convert_str_to_date_muzikantenbank_net(self):
         '''Get's the date from the category part of muzikantenbank.net ads and turns it into a dictionary'''
-        date_splitted = self.date.split()
-        self.date_string = date_splitted[-4].replace(',', '')
-        self.date_list = self.date_string.split('-')
+        self.date_list = self.date.split('-')
         self.day = self.date_list[0]
         self.month = self.date_list[1]
         self.year = self.date_list[2]
         return {'day': self.day,
                 'month': self.month,
                 'year': self.year}
-
-    def convert_to_datetime_object(self, date_dictionary):
-        '''Converts a dictionary of a date into a datetime object'''
-        self.date_dict = date_dictionary
-        self.date_datetime = datetime.date(
-            day=int(self.date_dict['day']), month=int(self.date_dict['month']), year=int(self.date_dict['year']))
-        return self.date_datetime
 
     def convert_str_to_date_poppunt_gld(self):
         '''Get's the date from the category part of Poppunt Gelderland ads and turns it into a dictionary'''
@@ -58,6 +49,15 @@ class DateConverter():
         return {'day': self.day,
                 'month': self.month,
                 'year': self.year}
+
+    def convert_to_datetime_object(self, date_dictionary):
+        '''Converts a dictionary of a date into a datetime object'''
+        self.date_dict = date_dictionary
+        self.date_datetime = datetime.date(
+            day=int(self.date_dict['day']), month=int(self.date_dict['month']), year=int(self.date_dict['year']))
+        return self.date_datetime
+
+
 
     def convert_strftime(self):
         return self.date.strftime('%d-%m-%Y')
