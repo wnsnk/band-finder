@@ -4,7 +4,7 @@ This is my first "big" project.
 I build a local "website" with Flask where you can easily search for the bands or musicians without needing to look on 3 different websites.
 The app can scrape the data of 3 different dutch musician classifieds.
 - [Muzikantenbank.eu](https://www.muzikantenbank.eu/)
-- [Muzikantenbank.net](https://www.muzikantenbank.net/) (Currently not working, muzikantenbank.net changed their website in september)
+- [Muzikantenbank.net](https://www.muzikantenbank.net/)
 - [Poppunt Gelderland](https://poppuntgelderland.nl/prikbord/)
 
 Results are automatically sorted by newest.
