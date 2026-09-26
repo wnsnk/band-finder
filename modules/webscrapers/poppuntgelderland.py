@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 from ..date_converter import DateConverter
 from dotenv import load_dotenv
 import os
-
+from ..advertisement import Advertisement
 
 load_dotenv()
 
@@ -46,5 +46,7 @@ class PopPuntGelderlandPrikbord():
                 'date': self.date,
                 'website': 'poppuntgelderland.nl'
             }
+            self.info = Advertisement(self.title, self.category, self.message, self.link, self.date, 'poppuntgelderland.nl')
+
             self.all_advertisements.append(self.info)
         return self.all_advertisements
