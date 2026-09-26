@@ -17,7 +17,7 @@ Results are automatically sorted by newest.
 ```bash
 git clone https://github.com/wnsnk/band-finder.git
 
-cd path/to/band-finder
+cd band-finder
 
 python3 -m venv .venv
 source .venv/bin/activate
